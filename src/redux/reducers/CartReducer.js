@@ -20,7 +20,7 @@ const CartReducer = (state = initialState, action) => {
         products: action.payload,
       };
     case ActionsTitles.CartActions.LOAD_CART_ERROR:
-      console.log("Error loading cart", action.payload);
+      console.error("Error loading cart", action.payload);
       return {
         ...state,
         loading: false,
@@ -39,7 +39,7 @@ const CartReducer = (state = initialState, action) => {
         products: action.payload,
       };
     case ActionsTitles.CartActions.ADD_TO_CART_ERROR:
-      console.log("Error adding to cart", action.payload);
+      console.error("Error adding to cart", action.payload);
       return {
         ...state,
         loading: false,
@@ -58,7 +58,7 @@ const CartReducer = (state = initialState, action) => {
         products: action.payload,
       };
     case ActionsTitles.CartActions.REMOVE_FROM_CART_ERROR:
-      console.log("Error removing from cart", action.payload);
+      console.error("Error removing from cart", action.payload);
       return {
         ...state,
         loading: false,

@@ -37,7 +37,6 @@ const addToCart = (product) => {
     try {
       const allProducts = Store.getState().CartReducer.products ?? [];
       const ids = allProducts.map((product) => product.id);
-      console.log("ids", ids);
       if (ids.includes(product.id)) {
         dispatch({
           type: ActionsTitles.CartActions.ADD_TO_CART_ERROR,
@@ -48,7 +47,6 @@ const addToCart = (product) => {
 
       await CacheServices.set("cart", product.id);
       allProducts.push(product);
-      console.log("allProducts", allProducts);
       dispatch({
         type: ActionsTitles.CartActions.ADD_TO_CART_SUCCESS,
         payload: allProducts,
@@ -111,7 +109,7 @@ const fetchProducts = async (ids) => {
     );
     return products;
   } catch (error) {
-    console.log("error fetching products", error);
+    console.error("error fetching products", error);
   }
 };
 

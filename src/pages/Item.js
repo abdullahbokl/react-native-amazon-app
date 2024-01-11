@@ -55,7 +55,7 @@ export default function Item(params) {
               }
               showToast();
             } catch (e) {
-              console.log("error saving to cart " + e);
+              console.error("error saving to cart " + e);
             }
           }}
         >
