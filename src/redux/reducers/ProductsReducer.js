@@ -7,6 +7,11 @@ const initialState = {
 
 const productsReducer = (state = initialState, action) => {
   switch (action.type) {
+    case ActionsTitles.ProductsActions.GET_PRODUCTS:
+      return {
+        ...state,
+        isLoading: true,
+      };
     case ActionsTitles.ProductsActions.GET_PRODUCTS_SUCCESS:
       return {
         ...state,

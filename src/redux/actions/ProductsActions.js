@@ -3,6 +3,10 @@ import ActionsTitles from "./ActionsTitles";
 
 export const getProducts = () => {
   return async (dispatch) => {
+    dispatch({
+      type: ActionsTitles.ProductsActions.GET_PRODUCTS,
+    });
+
     try {
       const response = await ApiServices.getProducts({ limit: 5 });
       console.log(response.data);

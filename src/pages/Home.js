@@ -10,6 +10,7 @@ import Metrics from "../theme/Metrics.js";
 import Colors from "../theme/Colors.js";
 
 import Actions from "../redux/actions/ProductsActions.js";
+import CustomLoadingIndicator from "../components/CustomLoadingIndicator.js";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const Home = () => {
     dispatch(Actions.getProducts());
   }, [dispatch]);
 
-  const products = useSelector((state) => state.ProductsReducer);
+  const state = useSelector((state) => state.ProductsReducer);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -32,7 +33,6 @@ const Home = () => {
         >
           Results
         </Text>
-
         {/* Location view */}
         <View
           style={{
@@ -51,8 +51,12 @@ const Home = () => {
           </Text>
         </View>
 
-        {/* List of products */}
-        <ItemList products={products.products} />
+        {/* Loading in indicator and items list */}
+        {state.isLoading ? (
+          <CustomLoadingIndicator />
+        ) : (
+          <ItemList products={state.products} />
+        )}
       </View>
     </SafeAreaView>
   );
