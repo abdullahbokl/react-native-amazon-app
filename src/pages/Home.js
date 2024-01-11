@@ -8,7 +8,7 @@ import Metrics from "../theme/Metrics.js";
 import ProductsActions from "../enums/ProductsActions.js";
 import Colors from "../theme/Colors.js";
 import { TouchableOpacity } from "react-native-gesture-handler";
-
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Home = () => {
   const navigation = useNavigation();
@@ -27,73 +27,83 @@ const Home = () => {
   }, []);
 
   return (
-    <View style={Style.container}>
-      <Text
-        style={{
-          fontSize: Metrics.FontSize(20),
-          fontWeight: "bold",
-          padding: 10,
-        }}
-      >
-        Results
-      </Text>
-
-      {/* Location view */}
-      <View
-        style={{
-          flexDirection: "row",
-          backgroundColor: Colors.primary,
-          padding: 15,
-        }}
-      >
-        <Icon
-          name="location-sharp"
-          size={Metrics.FontSize(20)}
-          style={{ marginRight: 10 }}
-        />
-        <Text style={{ fontSize: Metrics.FontSize(16), marginRight: 10 }}>
-          Delivery to Monoufia, Abdullah Khaled
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={Style.container}>
+        <Text
+          style={{
+            fontSize: Metrics.FontSize(20),
+            fontWeight: "bold",
+            padding: 10,
+          }}
+        >
+          Results
         </Text>
-      </View>
 
-      {/* List of products */}
-      <FlatList
-        style={Style.list}
-        data={products.products}
-        renderItem={({ item }) => {
-          return (
-            <TouchableOpacity
-              style={Style.card}
-              onPress={() => {
-                navigation.navigate("Item", { item });
-              }}
-            >
-              <View style={Style.image}>
-                <Image
-                  source={{ uri: item.image }}
-                  style={{ width: "100%", height: "100%" }}
-                />
-              </View>
-              <View
-                style={{
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  flex: 1,
+        {/* Location view */}
+        <View
+          style={{
+            flexDirection: "row",
+            backgroundColor: Colors.primary,
+            padding: 15,
+          }}
+        >
+          <Icon
+            name="location-sharp"
+            size={Metrics.FontSize(20)}
+            style={{ marginRight: 10 }}
+          />
+          <Text style={{ fontSize: Metrics.FontSize(16), marginRight: 10 }}>
+            Delivery to Monoufia, Abdullah Khaled
+          </Text>
+        </View>
+
+        {/* List of products */}
+        <FlatList
+          style={Style.list}
+          data={products.products}
+          renderItem={({ item }) => {
+            return (
+              <TouchableOpacity
+                style={Style.card}
+                onPress={() => {
+                  navigation.navigate("Item", { item });
                 }}
               >
-                <Text style={Style.text} numberOfLines={3} ellipsizeMode="tail">
-                  {item.title}
-                </Text>
-                <Text style={Style.text} numberOfLines={2} ellipsizeMode="tail">
-                  {item.price}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          );
-        }}
-        keyExtractor={(item) => item.id}
-      />
-    </View>
+                <View style={Style.image}>
+                  <Image
+                    source={{ uri: item.image }}
+                    style={{ width: "100%", height: "100%" }}
+                  />
+                </View>
+                <View
+                  style={{
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    flex: 1,
+                  }}
+                >
+                  <Text
+                    style={Style.text}
+                    numberOfLines={3}
+                    ellipsizeMode="tail"
+                  >
+                    {item.title}
+                  </Text>
+                  <Text
+                    style={Style.text}
+                    numberOfLines={2}
+                    ellipsizeMode="tail"
+                  >
+                    {item.price}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            );
+          }}
+          keyExtractor={(item) => item.id}
+        />
+      </View>
+    </SafeAreaView>
   );
 };
 

@@ -7,8 +7,20 @@ const Stack = createStackNavigator();
 export default function HomeNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Item" component={Item} />
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Item"
+        component={Item}
+        options={{
+          headerTitle: "",
+        }}
+      />
     </Stack.Navigator>
   );
 }
