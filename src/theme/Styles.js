@@ -29,8 +29,6 @@ const Style = StyleSheet.create({
   image: {
     width: "40%",
     height: "90%",
-    borderWidth: 4,
-    borderColor: Colors.primaryAccent,
     marginLeft: 10,
     padding: 5,
     borderRadius: 20,

@@ -1,6 +1,7 @@
 import ApiServices from "../../services/ApiServices";
 import ActionsTitles from "./ActionsTitles";
 import CacheServices from "../../services/CacheServices";
+import Store from "../Stores/Store";
 
 const loadCart = () => {
   return async (dispatch) => {
@@ -19,6 +20,39 @@ const loadCart = () => {
     } catch (error) {
       dispatch({
         type: ActionsTitles.CartActions.LOAD_CART_ERROR,
+        payload: error,
+      });
+    }
+  };
+};
+
+const addToCart = (product) => {
+  return async (dispatch) => {
+    dispatch({
+      type: ActionsTitles.CartActions.ADD_TO_CART,
+    });
+    try {
+      console.log("product", product);
+      const allProducts = Store.getState().CartReducer.products;
+      const ids = allProducts.map((product) => product.id);
+      console.log("ids", ids);
+      if (ids.includes(product.id)) {
+        dispatch({
+          type: ActionsTitles.CartActions.ADD_TO_CART_ERROR,
+          payload: "Product already in cart",
+        });
+        return;
+      }
+
+      await CacheServices.set("cart", product.id);
+      allProducts.push(product);
+      dispatch({
+        type: ActionsTitles.CartActions.ADD_TO_CART_SUCCESS,
+        payload: allProducts,
+      });
+    } catch (error) {
+      dispatch({
+        type: ActionsTitles.CartActions.ADD_TO_CART_ERROR,
         payload: error,
       });
     }
@@ -49,6 +83,7 @@ const fetchProducts = async (ids) => {
 
 const CartActions = {
   loadCart,
+  addToCart,
 };
 
 export default CartActions;

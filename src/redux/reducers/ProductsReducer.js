@@ -15,7 +15,7 @@ const productsReducer = (state = initialState, action) => {
     case ActionsTitles.ProductsActions.GET_PRODUCTS_SUCCESS:
       return {
         ...state,
-        products: action.payload,
+        ...action.payload,
         isLoading: false,
       };
     case ActionsTitles.ProductsActions.GET_PRODUCTS_ERROR:

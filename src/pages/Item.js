@@ -2,11 +2,13 @@ import React from "react";
 import Toast from "react-native-toast-message";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 
+import CartActions from "../redux/actions/CartActions.js";
 import Colors from "../theme/Colors.js";
 import Metrics from "../theme/Metrics.js";
-import CacheServices from "../services/CacheServices.js";
+import { useDispatch } from "react-redux";
 
 export default function Item(params) {
+  const dispatch = useDispatch();
   const item = params.route.params.item;
   return (
     <View style={Style.container}>
@@ -19,7 +21,7 @@ export default function Item(params) {
 
       <View style={Style.image}>
         <Image
-          source={{ uri: item.image }}
+          source={{ uri: item.images[0] }}
           style={{ width: "100%", height: "100%" }}
         />
       </View>
@@ -31,9 +33,9 @@ export default function Item(params) {
       <View>
         <TouchableOpacity
           style={Style.button}
-          onPress={async () => {
+          onPress={() => {
             try {
-              await CacheServices.set("cart", item.id);
+              dispatch(CartActions.addToCart(item));
               showToast();
             } catch (e) {
               console.log("error saving to cart " + e);
@@ -71,7 +73,7 @@ const Style = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: "40%",
+    height: "50%",
     borderRadius: 10,
     marginRight: 10,
   },

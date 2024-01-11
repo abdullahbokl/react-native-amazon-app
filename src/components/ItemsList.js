@@ -7,6 +7,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 const ItemList = ({ products }) => {
   const navigation = useNavigation();
+
   return (
     <FlatList
       style={Style.list}
@@ -21,7 +22,7 @@ const ItemList = ({ products }) => {
           >
             <View style={Style.image}>
               <Image
-                source={{ uri: item.image }}
+                source={{ uri: item.images[0] }}
                 style={{ width: "100%", height: "100%" }}
               />
             </View>
