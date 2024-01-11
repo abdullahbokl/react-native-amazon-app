@@ -10,6 +10,7 @@ import ProductsActions from "../redux/actions/ProductsActions.js";
 import CustomLoadingIndicator from "../components/CustomLoadingIndicator.js";
 import CustomErrorComponent from "../components/CustomErrorComponent.js";
 import CartActions from "../redux/actions/CartActions.js";
+import LocationView from "../components/LocationView.js";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -23,8 +24,10 @@ const Home = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={Style.container}>
-        {/* Loading, Loaded, Error */}
+        {/* location view */}
+        <LocationView />
 
+        {/* Loading, Loaded, Error */}
         {state.isLoading ? (
           <CustomLoadingIndicator />
         ) : state.error ? (

@@ -3,23 +3,26 @@ import ActionsTitles from "./ActionsTitles";
 import CacheServices from "../../services/CacheServices";
 import Store from "../Stores/Store";
 
-const loadCart = () => {
+const removeFromCart = (product) => {
   return async (dispatch) => {
     dispatch({
-      type: ActionsTitles.CartActions.LOAD_CART,
+      type: ActionsTitles.CartActions.REMOVE_FROM_CART,
     });
     try {
-      const ids = await loadIdsFromCache();
-
-      const products = await fetchProducts(ids);
-
+      const allProducts = Store.getState().CartReducer.products;
+      const ids = allProducts.map((product) => product.id);
+      const index = ids.indexOf(product.id);
+      if (index > -1) {
+        allProducts.splice(index, 1);
+      }
+      await CacheServices.set("cart", allProducts);
       dispatch({
-        type: ActionsTitles.CartActions.LOAD_CART_SUCCESS,
-        payload: products,
+        type: ActionsTitles.CartActions.REMOVE_FROM_CART_SUCCESS,
+        payload: allProducts,
       });
     } catch (error) {
       dispatch({
-        type: ActionsTitles.CartActions.LOAD_CART_ERROR,
+        type: ActionsTitles.CartActions.REMOVE_FROM_CART_ERROR,
         payload: error,
       });
     }
@@ -32,8 +35,7 @@ const addToCart = (product) => {
       type: ActionsTitles.CartActions.ADD_TO_CART,
     });
     try {
-      console.log("product", product);
-      const allProducts = Store.getState().CartReducer.products;
+      const allProducts = Store.getState().CartReducer.products ?? [];
       const ids = allProducts.map((product) => product.id);
       console.log("ids", ids);
       if (ids.includes(product.id)) {
@@ -46,6 +48,7 @@ const addToCart = (product) => {
 
       await CacheServices.set("cart", product.id);
       allProducts.push(product);
+      console.log("allProducts", allProducts);
       dispatch({
         type: ActionsTitles.CartActions.ADD_TO_CART_SUCCESS,
         payload: allProducts,
@@ -53,6 +56,37 @@ const addToCart = (product) => {
     } catch (error) {
       dispatch({
         type: ActionsTitles.CartActions.ADD_TO_CART_ERROR,
+        payload: error,
+      });
+    }
+  };
+};
+
+const loadCart = () => {
+  return async (dispatch) => {
+    dispatch({
+      type: ActionsTitles.CartActions.LOAD_CART,
+    });
+    try {
+      const ids = await loadIdsFromCache();
+
+      if (ids == null || ids.length == 0) {
+        dispatch({
+          type: ActionsTitles.CartActions.LOAD_CART_SUCCESS,
+          payload: [],
+        });
+        return;
+      }
+
+      const products = await fetchProducts(ids);
+
+      dispatch({
+        type: ActionsTitles.CartActions.LOAD_CART_SUCCESS,
+        payload: products,
+      });
+    } catch (error) {
+      dispatch({
+        type: ActionsTitles.CartActions.LOAD_CART_ERROR,
         payload: error,
       });
     }
@@ -84,6 +118,7 @@ const fetchProducts = async (ids) => {
 const CartActions = {
   loadCart,
   addToCart,
+  removeFromCart,
 };
 
 export default CartActions;

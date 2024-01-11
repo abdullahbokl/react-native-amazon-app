@@ -11,9 +11,13 @@ import { useDispatch } from "react-redux";
 export default function Item(params) {
   const dispatch = useDispatch();
   const item = params.route.params.item;
-  const isInCart = Store.getState()
-    .CartReducer.products.map((p) => p.id)
-    .includes(item.id);
+  let isInCart = false;
+  let products = Store.getState().CartReducer.products;
+  if (products == null) {
+    products = [];
+  }
+
+  isInCart = products.map((p) => p.id).includes(item.id);
 
   return (
     <View style={Style.container}>
@@ -44,7 +48,11 @@ export default function Item(params) {
           ]}
           onPress={() => {
             try {
-              dispatch(CartActions.addToCart(item));
+              if (isInCart) {
+                dispatch(CartActions.removeFromCart(item));
+              } else {
+                dispatch(CartActions.addToCart(item));
+              }
               showToast();
             } catch (e) {
               console.log("error saving to cart " + e);
