@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Toast from "react-native-toast-message";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Store from "../redux/Stores/Store.js";
@@ -11,13 +11,14 @@ import { useDispatch } from "react-redux";
 export default function Item(params) {
   const dispatch = useDispatch();
   const item = params.route.params.item;
-  let isInCart = false;
   let products = Store.getState().CartReducer.products;
   if (products == null) {
     products = [];
   }
 
-  isInCart = products.map((p) => p.id).includes(item.id);
+  const isInCart = products.map((p) => p.id).includes(item.id);
+
+  let [isInCartState, setIsInCartState] = useState(isInCart);
 
   return (
     <View style={Style.container}>
@@ -44,14 +45,16 @@ export default function Item(params) {
           // Style.button and backgroundColor are merged
           style={[
             Style.button,
-            { backgroundColor: isInCart ? Colors.danger : Colors.primary },
+            { backgroundColor: isInCartState ? Colors.danger : Colors.primary },
           ]}
           onPress={() => {
             try {
-              if (isInCart) {
+              if (isInCartState) {
                 dispatch(CartActions.removeFromCart(item));
+                setIsInCartState(false);
               } else {
                 dispatch(CartActions.addToCart(item));
+                setIsInCartState(true);
               }
               showToast();
             } catch (e) {
@@ -60,7 +63,7 @@ export default function Item(params) {
           }}
         >
           <Text style={{ color: Colors.white, textAlign: "center" }}>
-            {isInCart ? "Remove from cart" : "Add to cart"}
+            {isInCartState ? "Remove from cart" : "Add to cart"}
           </Text>
         </TouchableOpacity>
       </View>
