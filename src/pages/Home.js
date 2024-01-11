@@ -9,11 +9,13 @@ import Style from "../theme/Styles.js";
 import ProductsActions from "../redux/actions/ProductsActions.js";
 import CustomLoadingIndicator from "../components/CustomLoadingIndicator.js";
 import CustomErrorComponent from "../components/CustomErrorComponent.js";
+import CartActions from "../redux/actions/CartActions.js";
 
 const Home = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(ProductsActions.getProducts());
+    dispatch(CartActions.loadCart());
   }, [dispatch]);
 
   const state = useSelector((state) => state.ProductsReducer);

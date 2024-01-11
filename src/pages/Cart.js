@@ -15,9 +15,9 @@ import CustomErrorComponent from "../components/CustomErrorComponent.js";
 export default function Cart() {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(CartActions.loadCart());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(CartActions.loadCart());
+  // }, []);
 
   const state = useSelector((state) => state.CartReducer);
 
