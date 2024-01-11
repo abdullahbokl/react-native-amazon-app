@@ -24,6 +24,7 @@ const Style = StyleSheet.create({
     height: 150,
     justifyContent: "left",
     alignItems: "center",
+    borderRadius: 20,
   },
   image: {
     width: "40%",

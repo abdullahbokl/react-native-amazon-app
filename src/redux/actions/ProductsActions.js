@@ -6,10 +6,8 @@ export const getProducts = () => {
     dispatch({
       type: ActionsTitles.ProductsActions.GET_PRODUCTS,
     });
-
     try {
       const response = await ApiServices.getProducts({ limit: 5 });
-      console.log(response.data);
       dispatch({
         type: ActionsTitles.ProductsActions.GET_PRODUCTS_SUCCESS,
         payload: response.data,

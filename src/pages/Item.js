@@ -1,13 +1,12 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import React from "react";
-import { useNavigation } from "@react-navigation/native";
+import Toast from "react-native-toast-message";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 
 import Colors from "../theme/Colors.js";
 import Metrics from "../theme/Metrics.js";
+import CacheServices from "../services/CacheServices.js";
 
 export default function Item(params) {
-  const navigation = useNavigation();
   const item = params.route.params.item;
   return (
     <View style={Style.container}>
@@ -24,15 +23,18 @@ export default function Item(params) {
           style={{ width: "100%", height: "100%" }}
         />
       </View>
+      {/* Price */}
       <View>
-        <Text style={Style.text}>{item.price}</Text>
-        {/* add to cart button */}
+        <Text style={Style.text}>Price: {item.price}$</Text>
+      </View>
+      {/* Add to cart button */}
+      <View>
         <TouchableOpacity
           style={Style.button}
           onPress={async () => {
             try {
-              await AsyncStorage.setItem("cart", item.id.toString());
-              console.log("saved to cart");
+              await CacheServices.set("cart", item.id);
+              showToast();
             } catch (e) {
               console.log("error saving to cart " + e);
             }
@@ -89,3 +91,15 @@ const Style = StyleSheet.create({
     justifyContent: "center",
   },
 });
+
+const showToast = () => {
+  Toast.show({
+    type: "success",
+    position: "bottom",
+    text1: "Added to cart",
+    visibilityTime: 1000,
+    autoHide: true,
+    topOffset: 30,
+    bottomOffset: 40,
+  });
+};
