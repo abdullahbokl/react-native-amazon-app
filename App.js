@@ -4,7 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Provider } from "react-redux";
 
 import Tabs from "./src/navigation/Tabs.js";
-import Store from "./src/Stores/Store.js";
+import Store from "./src/redux/Stores/Store.js";
 
 const Stack = createStackNavigator();
 
@@ -25,5 +25,3 @@ export default function App() {
     </Provider>
   );
 }
-
-// // const products = useSelector((state) => state.products); //

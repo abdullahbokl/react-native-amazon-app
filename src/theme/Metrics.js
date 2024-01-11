@@ -11,4 +11,9 @@ function FontSize(value) {
   return (value * ScreenSize.screenWidth) / 375;
 }
 
-export default { Metrics: ScreenSize, FontSize };
+const Metrics = {
+  ScreenSize,
+  FontSize,
+};
+
+export default Metrics;

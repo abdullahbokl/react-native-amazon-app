@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -26,7 +27,17 @@ export default function Item(params) {
       <View>
         <Text style={Style.text}>{item.price}</Text>
         {/* add to cart button */}
-        <TouchableOpacity style={Style.button} onPress={() => {}}>
+        <TouchableOpacity
+          style={Style.button}
+          onPress={async () => {
+            try {
+              await AsyncStorage.setItem("cart", item.id.toString());
+              console.log("saved to cart");
+            } catch (e) {
+              console.log("error saving to cart " + e);
+            }
+          }}
+        >
           <Text style={{ color: Colors.white, textAlign: "center" }}>
             Add to cart
           </Text>
