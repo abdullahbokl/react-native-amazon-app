@@ -11,6 +11,7 @@ import CustomLoadingIndicator from "../components/CustomLoadingIndicator.js";
 import CustomErrorComponent from "../components/CustomErrorComponent.js";
 import CartActions from "../redux/actions/CartActions.js";
 import LocationView from "../components/LocationView.js";
+import CacheServices from "../services/CacheServices.js";
 
 const Home = () => {
   const dispatch = useDispatch();

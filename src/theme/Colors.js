@@ -1,10 +1,9 @@
-// green-accent and green  are the colors of the app
-
+// amazon colors
 const Colors = {
-  primary: "#00b894",
-  primaryAccent: "#00cec9",
-  secondary: "#0984e3",
-  secondaryAccent: "#6c5ce7",
+  primary: "#232f3e",
+  primaryAccent: "#131921",
+  secondary: "#f0c14b",
+  secondaryAccent: "#ddb347",
   success: "#00b894",
   successAccent: "#00cec9",
   danger: "#d63031",
@@ -19,7 +18,5 @@ const Colors = {
   darkAccent: "#636e72",
   white: "#ffffff",
 };
-
-
 
 export default Colors;

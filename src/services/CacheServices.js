@@ -4,25 +4,26 @@ const CacheServices = {
   get: async (key) => {
     try {
       const value = await AsyncStorage.getItem(key);
-      if (value !== null) {
-        return JSON.parse(value);
-      }
+      return value != null ? JSON.parse(value) : null;
     } catch (e) {
-      console.error("error getting " + key + " from cache");
+      console.error("error getting " + key + " from cache " + e);
     }
   },
   set: async (key, value) => {
     try {
-      await AsyncStorage.getItem(key).then((data) => {
-        let cart = JSON.parse(data);
-        if (cart == null) {
-          cart = [];
-        }
-        cart.push(value);
-        AsyncStorage.setItem(key, JSON.stringify(cart));
-      });
+      await AsyncStorage.setItem(key, JSON.stringify(value));
     } catch (e) {
-      console.error("error setting " + key + " from cache");
+      console.error("error setting " + key + " in cache " + e);
+    }
+  },
+  addToList: async (key, value) => {
+    try {
+      // use AsyncStorage to get the list
+      const list = (await CacheServices.get(key)) || [];
+      const newList = [...list, value];
+      await CacheServices.set(key, newList);
+    } catch (e) {
+      console.error("error adding " + value + " to " + key + " in cache " + e);
     }
   },
   remove: async (key) => {

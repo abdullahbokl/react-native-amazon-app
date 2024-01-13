@@ -45,7 +45,7 @@ const addToCart = (product) => {
         return;
       }
 
-      await CacheServices.set("cart", product.id);
+      await CacheServices.addToList("cart", product);
       allProducts.push(product);
       dispatch({
         type: ActionsTitles.CartActions.ADD_TO_CART_SUCCESS,
@@ -76,7 +76,11 @@ const loadCart = () => {
         return;
       }
 
-      const products = await fetchProducts(ids);
+      const products = [];
+      for (let i = 0; i < ids.length; i++) {
+        const response = await ApiServices.getProductById(ids[i]);
+        products.push(response.data);
+      }
 
       dispatch({
         type: ActionsTitles.CartActions.LOAD_CART_SUCCESS,
@@ -92,21 +96,21 @@ const loadCart = () => {
 };
 
 const loadIdsFromCache = async () => {
-  const ids = await CacheServices.get("cart");
-  if (ids) {
-    return ids;
-  }
-  return [];
+  const products = await CacheServices.get("cart");
+  if (products == null) return [];
+  return products.map((product) => product.id);
 };
 
 const fetchProducts = async (ids) => {
   try {
-    const products = await Promise.all(
-      ids.map(async (id) => {
-        const response = await ApiServices.getProductById(id);
-        return response.data;
-      })
-    );
+    if (ids == null || ids.length == 0) return [];
+
+    const products = [];
+    for (let i = 0; i < ids.length; i++) {
+      const response = await ApiServices.getProductById(ids[i]);
+      products.push(response.data);
+    }
+
     return products;
   } catch (error) {
     console.error("error fetching products", error);

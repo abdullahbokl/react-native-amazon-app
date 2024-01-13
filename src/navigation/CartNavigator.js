@@ -8,13 +8,13 @@ export default function CartNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Cart" component={Cart} />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="Item"
         component={Item}
         options={{
           headerTitle: "",
         }}
-      />
+      /> */}
     </Stack.Navigator>
   );
 }
