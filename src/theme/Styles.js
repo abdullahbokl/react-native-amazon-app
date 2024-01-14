@@ -38,6 +38,24 @@ const Style = StyleSheet.create({
     fontWeight: "bold",
     padding: 20,
   },
+  searchFieldContainer: {
+    height: 60,
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: Colors.white,
+    // border
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: Colors.primary,
+    // shadow
+    shadowColor: Colors.danger,
+    elevation: 10,
+    // padding
+    paddingHorizontal: 15,
+    // margin
+    marginHorizontal: 20,
+    marginVertical: 10,
+  },
 });
 
 export default Style;

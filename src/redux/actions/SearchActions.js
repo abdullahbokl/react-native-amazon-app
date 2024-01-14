@@ -1,20 +1,20 @@
 import ApiServices from "../../services/ApiServices";
 import ActionsTitles from "./ActionsTitles";
 
-const getProducts = () => {
+const searchProducts = (search) => {
   return async (dispatch) => {
     dispatch({
-      type: ActionsTitles.ProductsActions.GET_PRODUCTS,
+      type: ActionsTitles.ProductsActions.SEARCH_PRODUCTS,
     });
     try {
-      const response = await ApiServices.getProducts({ limit: 5 });
+      const response = await ApiServices.searchProducts(search);
       dispatch({
-        type: ActionsTitles.ProductsActions.GET_PRODUCTS_SUCCESS,
+        type: ActionsTitles.ProductsActions.SEARCH_PRODUCTS_SUCCESS,
         payload: response.data,
       });
     } catch (error) {
       dispatch({
-        type: ActionsTitles.ProductsActions.GET_PRODUCTS_ERROR,
+        type: ActionsTitles.ProductsActions.SEARCH_PRODUCTS_ERROR,
         payload: error,
       });
     }
@@ -22,7 +22,7 @@ const getProducts = () => {
 };
 
 const Actions = {
-  getProducts,
+  searchProducts,
 };
 
 export default Actions;

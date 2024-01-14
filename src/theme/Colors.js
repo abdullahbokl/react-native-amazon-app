@@ -1,22 +1,16 @@
-// amazon colors
+// amazon light colors
 const Colors = {
-  primary: "#232f3e",
-  primaryAccent: "#131921",
-  secondary: "#f0c14b",
-  secondaryAccent: "#ddb347",
-  success: "#00b894",
-  successAccent: "#00cec9",
-  danger: "#d63031",
-  dangerAccent: "#e17055",
-  warning: "#fdcb6e",
-  warningAccent: "#ffeaa7",
-  info: "#0984e3",
-  infoAccent: "#6c5ce7",
-  lightGrey: "#dfe6e9",
-  lightAccent: "#b2bec3",
-  dark: "#2d3436",
-  darkAccent: "#636e72",
-  white: "#ffffff",
+  // amazon primary colors
+  primary: '#f0c14b',
+  secondary: '#232f3e',
+  white: '#fff',
+  light: '#f1f3f5',
+  dark: '#18191a',
+  gray: '#adb5bd',
+  danger: '#dc3545',
+  success: '#28a745',
+  warning: '#ffc107',
+  info: '#17a2b8',
 };
 
 export default Colors;

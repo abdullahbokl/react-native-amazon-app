@@ -7,7 +7,13 @@ import Item from "../pages/Item.js";
 export default function CartNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Cart" component={Cart} />
+      <Stack.Screen
+        name="Cart"
+        component={Cart}
+        options={{
+          headerShown: false,
+        }}
+      />
       {/* <Stack.Screen
         name="Item"
         component={Item}

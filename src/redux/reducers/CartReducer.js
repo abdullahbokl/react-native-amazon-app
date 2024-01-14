@@ -2,8 +2,8 @@ import ActionsTitles from "../actions/ActionsTitles";
 
 const initialState = {
   products: [],
-  loading: false,
   error: null,
+  isLoading: false,
 };
 
 const CartReducer = (state = initialState, action) => {
@@ -11,57 +11,57 @@ const CartReducer = (state = initialState, action) => {
     case ActionsTitles.CartActions.LOAD_CART:
       return {
         ...state,
-        loading: true,
+        isLoading: true,
       };
     case ActionsTitles.CartActions.LOAD_CART_SUCCESS:
       return {
         ...state,
-        loading: false,
         products: action.payload,
+        isLoading: false,
       };
     case ActionsTitles.CartActions.LOAD_CART_ERROR:
       console.error("Error loading cart", action.payload);
       return {
         ...state,
-        loading: false,
+        isLoading: false,
       };
 
     // Add to cart
     case ActionsTitles.CartActions.ADD_TO_CART:
       return {
         ...state,
-        loading: true,
+        isLoading: true,
       };
     case ActionsTitles.CartActions.ADD_TO_CART_SUCCESS:
       return {
         ...state,
-        loading: false,
         products: action.payload,
+        isLoading: false,
       };
     case ActionsTitles.CartActions.ADD_TO_CART_ERROR:
       console.error("Error adding to cart", action.payload);
       return {
         ...state,
-        loading: false,
+        isLoading: false,
       };
 
     // Remove from cart
     case ActionsTitles.CartActions.REMOVE_FROM_CART:
       return {
         ...state,
-        loading: true,
+        isLoading: true,
       };
     case ActionsTitles.CartActions.REMOVE_FROM_CART_SUCCESS:
       return {
         ...state,
-        loading: false,
         products: action.payload,
+        isLoading: false,
       };
     case ActionsTitles.CartActions.REMOVE_FROM_CART_ERROR:
       console.error("Error removing from cart", action.payload);
       return {
         ...state,
-        loading: false,
+        isLoading: false,
       };
 
     //

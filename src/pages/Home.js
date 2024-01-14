@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -11,7 +11,9 @@ import CustomLoadingIndicator from "../components/CustomLoadingIndicator.js";
 import CustomErrorComponent from "../components/CustomErrorComponent.js";
 import CartActions from "../redux/actions/CartActions.js";
 import LocationView from "../components/LocationView.js";
-import CacheServices from "../services/CacheServices.js";
+import SearchField from "../components/SearchField.js";
+import SearchResults from "./SearchResults.js";
+import SearchActions from "../redux/actions/SearchActions.js";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -20,6 +22,7 @@ const Home = () => {
     dispatch(CartActions.loadCart());
   }, [dispatch]);
 
+  const [searchQuery, setSearch] = useState("");
   const state = useSelector((state) => state.ProductsReducer);
 
   return (
@@ -27,9 +30,17 @@ const Home = () => {
       <View style={Style.container}>
         {/* location view */}
         <LocationView />
-
+        {/* search field */}
+        <SearchField
+          onChangeText={(search) => {
+            setSearch(search);
+            dispatch(SearchActions.searchProducts(search));
+          }}
+        />
         {/* Loading, Loaded, Error */}
-        {state.isLoading ? (
+        {searchQuery != "" ? (
+          <SearchResults />
+        ) : state.isLoading ? (
           <CustomLoadingIndicator />
         ) : state.error ? (
           <CustomErrorComponent error={state.error} />
