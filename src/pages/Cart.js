@@ -1,21 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { View } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import ItemList from "../components/ItemsList.js";
 import Style from "../theme/Styles.js";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomLoadingIndicator from "../components/CustomLoadingIndicator.js";
 import CustomErrorComponent from "../components/CustomErrorComponent.js";
-import LocationView from "../components/LocationView.js";
 import SearchField from "../components/SearchField.js";
 
 export default function Cart() {
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(CartActions.loadCart());
-  // }, []);
-
   const state = useSelector((state) => state.CartReducer);
+
+  const [search, setSearch] = useState("");
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -23,12 +19,13 @@ export default function Cart() {
         {/* space from top */}
         <View style={{ height: 15 }} />
 
-        {/* location view */}
         {/* Search filed */}
-        <SearchField />
+        <SearchField onChangeText={(text) => setSearch(text)} />
 
         {/* Loading, Loaded, Error */}
-        {state.isLoading ? (
+        {search != "" ? (
+          <ItemList products={filterData(state.products, search)} />
+        ) : state.isLoading ? (
           <CustomLoadingIndicator />
         ) : state.error ? (
           <CustomErrorComponent error={state.error} />
@@ -39,3 +36,11 @@ export default function Cart() {
     </SafeAreaView>
   );
 }
+
+filterData = (data, search) => {
+  return data.filter((item) => {
+    const itemData = item.title.toUpperCase();
+    const textData = search.toUpperCase();
+    return itemData.indexOf(textData) > -1;
+  });
+};
